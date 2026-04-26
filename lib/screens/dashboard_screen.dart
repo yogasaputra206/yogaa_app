@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../theme/app_colors.dart';
 import 'dart:ui';
 
-// implementasi halaman dashboard
+// menambahkan halaman dashboard
 
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({super.key});
