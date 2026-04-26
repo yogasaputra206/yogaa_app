@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../theme/app_colors.dart';
 import 'dart:ui';
 
-// fitur forgot password
+// menambahkan fitur forgot password
 
 class ForgotPasswordScreen extends StatefulWidget {
   const ForgotPasswordScreen({super.key});
