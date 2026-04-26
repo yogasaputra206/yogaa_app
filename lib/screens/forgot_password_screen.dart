@@ -6,6 +6,7 @@ import '../widgets/blur_sphere.dart';
 import '../widgets/glass_card.dart';
 import '../widgets/custom_text_field.dart';
 
+// menambahkan fitur forgot password
 class ForgotPasswordScreen extends StatefulWidget {
   const ForgotPasswordScreen({super.key});
 
@@ -79,7 +80,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
             right: -100,
             child: BlurSphere(color: AppColors.secondaryFixed.withOpacity(0.2)),
           ),
-          
+
           // Main Content
           SafeArea(
             child: Center(
@@ -197,20 +198,23 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 18),
             child: Center(
-              child: _isLoading 
-                ? const SizedBox(
-                    width: 24, 
-                    height: 24, 
-                    child: CircularProgressIndicator(color: Colors.white, strokeWidth: 3)
-                  )
-                : Text(
-                    'Kirim Link Reset',
-                    style: GoogleFonts.manrope(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.onPrimary,
+              child: _isLoading
+                  ? const SizedBox(
+                      width: 24,
+                      height: 24,
+                      child: CircularProgressIndicator(
+                        color: Colors.white,
+                        strokeWidth: 3,
+                      ),
+                    )
+                  : Text(
+                      'Kirim Link Reset',
+                      style: GoogleFonts.manrope(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.onPrimary,
+                      ),
                     ),
-                  ),
             ),
           ),
         ),
@@ -223,10 +227,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
       onPressed: () => Navigator.pop(context),
       style: TextButton.styleFrom(
         foregroundColor: AppColors.secondary,
-        textStyle: GoogleFonts.inter(
-          fontWeight: FontWeight.w600,
-          fontSize: 14,
-        ),
+        textStyle: GoogleFonts.inter(fontWeight: FontWeight.w600, fontSize: 14),
       ),
       child: const Text('Kembali ke Login'),
     );

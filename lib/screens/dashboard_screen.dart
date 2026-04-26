@@ -3,18 +3,28 @@ import 'package:google_fonts/google_fonts.dart';
 import '../theme/app_colors.dart';
 import '../widgets/blur_sphere.dart';
 
+// menambahkan halaman dashboard
+
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({super.key});
 
   // Dummy list of items for GridView.builder
   final List<Map<String, dynamic>> _menuItems = const [
-    {'title': 'Schedule', 'icon': Icons.calendar_month, 'color': AppColors.tertiary},
+    {
+      'title': 'Schedule',
+      'icon': Icons.calendar_month,
+      'color': AppColors.tertiary,
+    },
     {'title': 'Classes', 'icon': Icons.play_lesson, 'color': AppColors.primary},
     {'title': 'Trainers', 'icon': Icons.people, 'color': AppColors.secondary},
     {'title': 'Community', 'icon': Icons.forum, 'color': AppColors.outline},
     {'title': 'Progress', 'icon': Icons.trending_up, 'color': Colors.green},
     {'title': 'Nutrition', 'icon': Icons.restaurant, 'color': Colors.orange},
-    {'title': 'Mindfulness', 'icon': Icons.self_improvement, 'color': Colors.purple},
+    {
+      'title': 'Mindfulness',
+      'icon': Icons.self_improvement,
+      'color': Colors.purple,
+    },
     {'title': 'Shop', 'icon': Icons.shopping_bag, 'color': Colors.blue},
     {'title': 'Support', 'icon': Icons.help_outline, 'color': Colors.teal},
     {'title': 'Settings', 'icon': Icons.settings, 'color': Colors.grey},
@@ -23,7 +33,9 @@ class DashboardScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Retrieve the user email passed from LoginScreen
-    final String userEmail = ModalRoute.of(context)?.settings.arguments as String? ?? 'yogauser@test.com';
+    final String userEmail =
+        ModalRoute.of(context)?.settings.arguments as String? ??
+        'yogauser@test.com';
 
     return Scaffold(
       backgroundColor: AppColors.surface,
@@ -39,10 +51,14 @@ class DashboardScreen extends StatelessWidget {
             icon: const Icon(Icons.logout, color: AppColors.outline),
             onPressed: () {
               // Menghapus semua riwayat navigator dan kembali ke login
-              Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
+              Navigator.pushNamedAndRemoveUntil(
+                context,
+                '/login',
+                (route) => false,
+              );
             },
             tooltip: 'Logout',
-          )
+          ),
         ],
       ),
       extendBodyBehindAppBar: false,
@@ -59,7 +75,7 @@ class DashboardScreen extends StatelessWidget {
             left: -100,
             child: const BlurSphere(color: Color(0xFFc9e7f5)),
           ),
-          
+
           SafeArea(
             child: Center(
               child: ConstrainedBox(
@@ -112,7 +128,10 @@ class DashboardScreen extends StatelessWidget {
             decoration: BoxDecoration(
               color: AppColors.surfaceContainerHigh,
               shape: BoxShape.circle,
-              border: Border.all(color: AppColors.surfaceContainerHighest, width: 2),
+              border: Border.all(
+                color: AppColors.surfaceContainerHighest,
+                width: 2,
+              ),
             ),
             child: const Icon(Icons.person, color: AppColors.secondary),
           ),
@@ -147,7 +166,8 @@ class DashboardScreen extends StatelessWidget {
   }
 
   Widget _buildWelcomeCard() {
-    return Card( // Menggunakan spesifik widget Card sesuai ketentuan
+    return Card(
+      // Menggunakan spesifik widget Card sesuai ketentuan
       elevation: 8,
       shadowColor: AppColors.primary.withOpacity(0.4),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
@@ -187,7 +207,10 @@ class DashboardScreen extends StatelessWidget {
                 backgroundColor: AppColors.surfaceContainerLowest,
                 foregroundColor: AppColors.primary,
                 elevation: 0,
-                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 24,
+                  vertical: 12,
+                ),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(999),
                 ),

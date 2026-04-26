@@ -6,6 +6,8 @@ import '../widgets/blur_sphere.dart';
 import '../widgets/glass_card.dart';
 import '../widgets/custom_text_field.dart';
 
+// menambahkan halaman login
+
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
@@ -37,9 +39,10 @@ class _LoginScreenState extends State<LoginScreen> {
 
       if (!mounted) return;
 
-      if (_emailController.text == 'admin@test.com' && _passwordController.text == 'Admin123') {
+      if (_emailController.text == 'admin@test.com' &&
+          _passwordController.text == 'Admin123') {
         Navigator.pushReplacementNamed(
-          context, 
+          context,
           '/dashboard',
           arguments: _emailController.text, // passing state parameter
         );
@@ -78,7 +81,7 @@ class _LoginScreenState extends State<LoginScreen> {
             right: -100,
             child: BlurSphere(color: AppColors.secondaryFixed.withOpacity(0.2)),
           ),
-          
+
           // Main Content
           Center(
             child: SingleChildScrollView(
@@ -118,7 +121,10 @@ class _LoginScreenState extends State<LoginScreen> {
                               alignment: Alignment.centerRight,
                               child: TextButton(
                                 onPressed: () {
-                                  Navigator.pushNamed(context, '/forgot_password');
+                                  Navigator.pushNamed(
+                                    context,
+                                    '/forgot_password',
+                                  );
                                 },
                                 style: TextButton.styleFrom(
                                   foregroundColor: AppColors.primary,
@@ -174,7 +180,8 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Image.asset(
             'assets/images/yogaa.jpeg',
             fit: BoxFit.cover,
-            errorBuilder: (context, error, stackTrace) => const Icon(Icons.person, size: 40, color: AppColors.primary),
+            errorBuilder: (context, error, stackTrace) =>
+                const Icon(Icons.person, size: 40, color: AppColors.primary),
           ),
         ),
         const SizedBox(height: 24),
@@ -227,20 +234,23 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 18),
             child: Center(
-              child: _isLoading 
-                ? const SizedBox(
-                    width: 24, 
-                    height: 24, 
-                    child: CircularProgressIndicator(color: Colors.white, strokeWidth: 3)
-                  )
-                : Text(
-                    'Login Now',
-                    style: GoogleFonts.manrope(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.onPrimary,
+              child: _isLoading
+                  ? const SizedBox(
+                      width: 24,
+                      height: 24,
+                      child: CircularProgressIndicator(
+                        color: Colors.white,
+                        strokeWidth: 3,
+                      ),
+                    )
+                  : Text(
+                      'Login Now',
+                      style: GoogleFonts.manrope(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.onPrimary,
+                      ),
                     ),
-                  ),
             ),
           ),
         ),
@@ -255,10 +265,7 @@ class _LoginScreenState extends State<LoginScreen> {
       children: [
         Text(
           "Don't have an account? ",
-          style: GoogleFonts.inter(
-            fontSize: 14,
-            color: AppColors.secondary,
-          ),
+          style: GoogleFonts.inter(fontSize: 14, color: AppColors.secondary),
         ),
         TextButton(
           onPressed: () {},
@@ -289,7 +296,7 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
           ),
           if (i < 2) const SizedBox(width: 16),
-        ]
+        ],
       ],
     );
   }
