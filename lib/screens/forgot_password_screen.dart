@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../theme/app_colors.dart';
-import 'dart:ui';
-
-// menambahkan fitur forgot password
+import '../utils/validators.dart';
+import '../widgets/blur_sphere.dart';
+import '../widgets/glass_card.dart';
+import '../widgets/custom_text_field.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
   const ForgotPasswordScreen({super.key});
@@ -14,13 +15,42 @@ class ForgotPasswordScreen extends StatefulWidget {
 
 class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   final _formKey = GlobalKey<FormState>();
-  final _emailController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
   bool _isLoading = false;
 
   @override
   void dispose() {
     _emailController.dispose();
     super.dispose();
+  }
+
+  void _handleReset() async {
+    if (_formKey.currentState!.validate()) {
+      setState(() {
+        _isLoading = true;
+      });
+
+      // Simulate a network request
+      await Future.delayed(const Duration(seconds: 2));
+
+      if (!mounted) return;
+
+      setState(() {
+        _isLoading = false;
+      });
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            'Link reset telah dikirim ke email Anda',
+            style: GoogleFonts.inter(color: Colors.white),
+          ),
+          backgroundColor: Colors.green.shade600,
+          behavior: SnackBarBehavior.floating,
+        ),
+      );
+      Navigator.pop(context); // Kembali ke menu utama (login)
+    }
   }
 
   @override
@@ -42,61 +72,55 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
           Positioned(
             top: -100,
             left: -100,
-            child: _buildBlurSphere(AppColors.primaryFixed.withOpacity(0.3)),
+            child: BlurSphere(color: AppColors.primaryFixed.withOpacity(0.3)),
           ),
           Positioned(
             bottom: -100,
             right: -100,
-            child: _buildBlurSphere(AppColors.secondaryFixed.withOpacity(0.2)),
+            child: BlurSphere(color: AppColors.secondaryFixed.withOpacity(0.2)),
           ),
-
+          
           // Main Content
-          Center(
-            child: SingleChildScrollView(
-              padding: const EdgeInsets.symmetric(horizontal: 24.0),
-              child: ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: 448),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    _buildHeader(),
-                    const SizedBox(height: 48),
-                    _buildGlassCard(
-                      child: Form(
-                        key: _formKey,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            _buildInputField(
-                              label: 'EMAIL ADDRESS',
-                              hint: 'Enter your email',
-                              icon: Icons.email_outlined,
-                            ),
-                            const SizedBox(height: 32),
-                            _buildResetButton(context),
-                          ],
+          SafeArea(
+            child: Center(
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                child: ConstrainedBox(
+                  constraints: const BoxConstraints(maxWidth: 448),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      _buildHeader(),
+                      const SizedBox(height: 48),
+                      GlassCard(
+                        child: Form(
+                          key: _formKey,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              CustomTextField(
+                                label: 'EMAIL ADDRESS',
+                                hint: 'Enter your email',
+                                icon: Icons.email_outlined,
+                                controller: _emailController,
+                                validator: Validators.validateEmail,
+                              ),
+                              const SizedBox(height: 32),
+                              _buildResetButton(),
+                              const SizedBox(height: 16),
+                              _buildBackButton(),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),
           ),
         ],
-      ),
-    );
-  }
-
-  Widget _buildBlurSphere(Color color) {
-    return Container(
-      width: 384,
-      height: 384,
-      decoration: BoxDecoration(color: color, shape: BoxShape.circle),
-      child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 100, sigmaY: 100),
-        child: Container(color: Colors.transparent),
       ),
     );
   }
@@ -148,98 +172,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     );
   }
 
-  Widget _buildGlassCard({required Widget child}) {
-    return Stack(
-      children: [
-        Positioned.fill(
-          child: DecoratedBox(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(32),
-              boxShadow: [
-                BoxShadow(
-                  color: const Color(0xFF001f29).withOpacity(0.06),
-                  blurRadius: 64,
-                  offset: const Offset(0, 24),
-                ),
-              ],
-            ),
-          ),
-        ),
-        ClipRRect(
-          borderRadius: BorderRadius.circular(32),
-          child: BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 40, sigmaY: 40),
-            child: Container(
-              padding: const EdgeInsets.all(32),
-              decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.7),
-                borderRadius: BorderRadius.circular(32),
-              ),
-              child: child,
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildInputField({
-    required String label,
-    required String hint,
-    required IconData icon,
-  }) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(left: 4, bottom: 8),
-          child: Text(
-            label,
-            style: GoogleFonts.inter(
-              fontSize: 12,
-              fontWeight: FontWeight.w600,
-              letterSpacing: 2.4,
-              color: AppColors.onSurfaceVariant,
-            ),
-          ),
-        ),
-        Container(
-          decoration: BoxDecoration(
-            color: AppColors.surfaceContainerHigh,
-            borderRadius: BorderRadius.circular(12),
-          ),
-          child: TextFormField(
-            controller: _emailController,
-            validator: (value) {
-              if (value == null || value.isEmpty)
-                return 'Email tidak boleh kosong';
-              if (!RegExp(
-                r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
-              ).hasMatch(value)) {
-                return 'Format email tidak valid';
-              }
-              return null;
-            },
-            style: GoogleFonts.inter(color: AppColors.onSurface, fontSize: 16),
-            decoration: InputDecoration(
-              hintText: hint,
-              hintStyle: GoogleFonts.inter(
-                color: AppColors.outline.withOpacity(0.6),
-              ),
-              prefixIcon: Icon(icon, color: AppColors.outline, size: 20),
-              border: InputBorder.none,
-              contentPadding: const EdgeInsets.symmetric(
-                vertical: 16,
-                horizontal: 16,
-              ),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildResetButton(BuildContext context) {
+  Widget _buildResetButton() {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(9999),
@@ -259,54 +192,43 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
       child: Material(
         color: Colors.transparent,
         child: InkWell(
-          onTap: _isLoading
-              ? null
-              : () async {
-                  if (_formKey.currentState!.validate()) {
-                    setState(() {
-                      _isLoading = true;
-                    });
-
-                    await Future.delayed(const Duration(seconds: 2));
-                    if (!mounted) return;
-
-                    setState(() {
-                      _isLoading = false;
-                    });
-
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('Link reset telah dikirim ke email Anda'),
-                      ),
-                    );
-                    Navigator.pop(context);
-                  }
-                },
+          onTap: _isLoading ? null : _handleReset,
           borderRadius: BorderRadius.circular(9999),
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 18),
             child: Center(
-              child: _isLoading
-                  ? const SizedBox(
-                      width: 24,
-                      height: 24,
-                      child: CircularProgressIndicator(
-                        color: AppColors.onPrimary,
-                        strokeWidth: 2,
-                      ),
-                    )
-                  : Text(
-                      'Kirim Link Reset',
-                      style: GoogleFonts.manrope(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: AppColors.onPrimary,
-                      ),
+              child: _isLoading 
+                ? const SizedBox(
+                    width: 24, 
+                    height: 24, 
+                    child: CircularProgressIndicator(color: Colors.white, strokeWidth: 3)
+                  )
+                : Text(
+                    'Kirim Link Reset',
+                    style: GoogleFonts.manrope(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.onPrimary,
                     ),
+                  ),
             ),
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildBackButton() {
+    return TextButton(
+      onPressed: () => Navigator.pop(context),
+      style: TextButton.styleFrom(
+        foregroundColor: AppColors.secondary,
+        textStyle: GoogleFonts.inter(
+          fontWeight: FontWeight.w600,
+          fontSize: 14,
+        ),
+      ),
+      child: const Text('Kembali ke Login'),
     );
   }
 }

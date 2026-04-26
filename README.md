@@ -48,7 +48,6 @@ flutter run
 
 Tambahkan screenshot di folder assets/images lalu tampilkan di sini:
 
-## 📸 Screenshot
 
 ![Login](assets/images/login.jpeg)
 ![Dashboard](assets/images/dashboard.jpeg)
