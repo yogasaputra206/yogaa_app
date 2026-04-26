@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-// menambahkan konfigurasi tema warna aplikasi
+// add konfigurasi tema warna aplikasi
 
 class AppColors {
   static const Color primary = Color(0xFF005a71);
