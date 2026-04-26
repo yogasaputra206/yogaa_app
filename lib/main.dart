@@ -5,7 +5,7 @@ import 'screens/dashboard_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'theme/app_colors.dart';
 
-// setup struktur aplikasi flutter
+// struktur aplikasi flutter
 void main() {
   runApp(const YogaaApp());
 }
