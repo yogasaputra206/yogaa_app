@@ -6,7 +6,7 @@ import '../widgets/blur_sphere.dart';
 import '../widgets/glass_card.dart';
 import '../widgets/custom_text_field.dart';
 
-// menambahkan halaman login
+// add halaman login
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
