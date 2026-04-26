@@ -3,6 +3,8 @@ import 'package:google_fonts/google_fonts.dart';
 import '../theme/app_colors.dart';
 import 'dart:ui';
 
+// fitur forgot password
+
 class ForgotPasswordScreen extends StatefulWidget {
   const ForgotPasswordScreen({super.key});
 
@@ -47,7 +49,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
             right: -100,
             child: _buildBlurSphere(AppColors.secondaryFixed.withOpacity(0.2)),
           ),
-          
+
           // Main Content
           Center(
             child: SingleChildScrollView(
@@ -91,10 +93,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     return Container(
       width: 384,
       height: 384,
-      decoration: BoxDecoration(
-        color: color,
-        shape: BoxShape.circle,
-      ),
+      decoration: BoxDecoration(color: color, shape: BoxShape.circle),
       child: BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 100, sigmaY: 100),
         child: Container(color: Colors.transparent),
@@ -212,16 +211,16 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
           child: TextFormField(
             controller: _emailController,
             validator: (value) {
-              if (value == null || value.isEmpty) return 'Email tidak boleh kosong';
-              if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)) {
+              if (value == null || value.isEmpty)
+                return 'Email tidak boleh kosong';
+              if (!RegExp(
+                r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
+              ).hasMatch(value)) {
                 return 'Format email tidak valid';
               }
               return null;
             },
-            style: GoogleFonts.inter(
-              color: AppColors.onSurface,
-              fontSize: 16,
-            ),
+            style: GoogleFonts.inter(color: AppColors.onSurface, fontSize: 16),
             decoration: InputDecoration(
               hintText: hint,
               hintStyle: GoogleFonts.inter(
@@ -229,7 +228,10 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
               ),
               prefixIcon: Icon(icon, color: AppColors.outline, size: 20),
               border: InputBorder.none,
-              contentPadding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+              contentPadding: const EdgeInsets.symmetric(
+                vertical: 16,
+                horizontal: 16,
+              ),
             ),
           ),
         ),
@@ -257,46 +259,50 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
       child: Material(
         color: Colors.transparent,
         child: InkWell(
-          onTap: _isLoading ? null : () async {
-            if (_formKey.currentState!.validate()) {
-              setState(() {
-                _isLoading = true;
-              });
-              
-              await Future.delayed(const Duration(seconds: 2));
-              if (!mounted) return;
-              
-              setState(() {
-                _isLoading = false;
-              });
+          onTap: _isLoading
+              ? null
+              : () async {
+                  if (_formKey.currentState!.validate()) {
+                    setState(() {
+                      _isLoading = true;
+                    });
 
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Link reset telah dikirim ke email Anda')),
-              );
-              Navigator.pop(context);
-            }
-          },
+                    await Future.delayed(const Duration(seconds: 2));
+                    if (!mounted) return;
+
+                    setState(() {
+                      _isLoading = false;
+                    });
+
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Link reset telah dikirim ke email Anda'),
+                      ),
+                    );
+                    Navigator.pop(context);
+                  }
+                },
           borderRadius: BorderRadius.circular(9999),
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 18),
             child: Center(
-              child: _isLoading 
-                ? const SizedBox(
-                    width: 24,
-                    height: 24,
-                    child: CircularProgressIndicator(
-                      color: AppColors.onPrimary,
-                      strokeWidth: 2,
+              child: _isLoading
+                  ? const SizedBox(
+                      width: 24,
+                      height: 24,
+                      child: CircularProgressIndicator(
+                        color: AppColors.onPrimary,
+                        strokeWidth: 2,
+                      ),
+                    )
+                  : Text(
+                      'Kirim Link Reset',
+                      style: GoogleFonts.manrope(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.onPrimary,
+                      ),
                     ),
-                  )
-                : Text(
-                    'Kirim Link Reset',
-                    style: GoogleFonts.manrope(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.onPrimary,
-                    ),
-                  ),
             ),
           ),
         ),

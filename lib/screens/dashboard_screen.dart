@@ -3,12 +3,15 @@ import 'package:google_fonts/google_fonts.dart';
 import '../theme/app_colors.dart';
 import 'dart:ui';
 
+// implementasi halaman dashboard
+
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final String userName = ModalRoute.of(context)?.settings.arguments as String? ?? 'User';
+    final String userName =
+        ModalRoute.of(context)?.settings.arguments as String? ?? 'User';
 
     return Scaffold(
       backgroundColor: AppColors.surface,
@@ -25,7 +28,7 @@ class DashboardScreen extends StatelessWidget {
             left: -100,
             child: _buildBlurSphere(AppColors.secondaryFixed.withOpacity(0.2)),
           ),
-          
+
           SafeArea(
             child: Center(
               child: ConstrainedBox(
@@ -74,10 +77,7 @@ class DashboardScreen extends StatelessWidget {
     return Container(
       width: 384,
       height: 384,
-      decoration: BoxDecoration(
-        color: color,
-        shape: BoxShape.circle,
-      ),
+      decoration: BoxDecoration(color: color, shape: BoxShape.circle),
       child: BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 100, sigmaY: 100),
         child: Container(color: Colors.transparent),
@@ -99,7 +99,10 @@ class DashboardScreen extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: AppColors.surfaceContainerHigh,
                   shape: BoxShape.circle,
-                  border: Border.all(color: AppColors.surfaceContainerHighest, width: 2),
+                  border: Border.all(
+                    color: AppColors.surfaceContainerHighest,
+                    width: 2,
+                  ),
                 ),
                 child: const Icon(Icons.person, color: AppColors.secondary),
               ),
@@ -128,7 +131,11 @@ class DashboardScreen extends StatelessWidget {
           ),
           IconButton(
             onPressed: () {
-              Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
+              Navigator.pushNamedAndRemoveUntil(
+                context,
+                '/login',
+                (route) => false,
+              );
             },
             icon: const Icon(Icons.logout, color: AppColors.outline),
             tooltip: 'Logout',
@@ -211,7 +218,11 @@ class DashboardScreen extends StatelessWidget {
           crossAxisSpacing: 16,
           childAspectRatio: childAspectRatio,
           children: [
-            _buildActionCard('Schedule', Icons.calendar_month, AppColors.tertiary),
+            _buildActionCard(
+              'Schedule',
+              Icons.calendar_month,
+              AppColors.tertiary,
+            ),
             _buildActionCard('Classes', Icons.play_lesson, AppColors.primary),
             _buildActionCard('Trainers', Icons.people, AppColors.secondary),
             _buildActionCard('Settings', Icons.settings, AppColors.outline),
@@ -291,7 +302,9 @@ class DashboardScreen extends StatelessWidget {
               margin: const EdgeInsets.only(bottom: 12),
               elevation: 4,
               shadowColor: Colors.black12,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+              ),
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Row(
@@ -302,7 +315,10 @@ class DashboardScreen extends StatelessWidget {
                         color: AppColors.tertiary.withOpacity(0.1),
                         shape: BoxShape.circle,
                       ),
-                      child: const Icon(Icons.fitness_center, color: AppColors.tertiary),
+                      child: const Icon(
+                        Icons.fitness_center,
+                        color: AppColors.tertiary,
+                      ),
                     ),
                     const SizedBox(width: 16),
                     Expanded(

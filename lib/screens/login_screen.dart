@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../theme/app_colors.dart';
 import 'dart:ui';
 
+// implementasi halaman login
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
@@ -41,7 +42,7 @@ class _LoginScreenState extends State<LoginScreen> {
             right: -100,
             child: _buildBlurSphere(AppColors.secondaryFixed.withOpacity(0.2)),
           ),
-          
+
           // Main Content
           Center(
             child: SingleChildScrollView(
@@ -69,7 +70,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                 if (value == null || value.isEmpty) {
                                   return 'Email tidak boleh kosong';
                                 }
-                                if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)) {
+                                if (!RegExp(
+                                  r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
+                                ).hasMatch(value)) {
                                   return 'Format email tidak valid';
                                 }
                                 return null;
@@ -89,7 +92,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                 if (value.length < 8) {
                                   return 'Minimal 8 karakter';
                                 }
-                                if (!RegExp(r'^(?=.*[A-Za-z])(?=.*\d)').hasMatch(value)) {
+                                if (!RegExp(
+                                  r'^(?=.*[A-Za-z])(?=.*\d)',
+                                ).hasMatch(value)) {
                                   return 'Harus mengandung huruf dan angka';
                                 }
                                 return null;
@@ -100,7 +105,10 @@ class _LoginScreenState extends State<LoginScreen> {
                               alignment: Alignment.centerRight,
                               child: TextButton(
                                 onPressed: () {
-                                  Navigator.pushNamed(context, '/forgot_password');
+                                  Navigator.pushNamed(
+                                    context,
+                                    '/forgot_password',
+                                  );
                                 },
                                 style: TextButton.styleFrom(
                                   foregroundColor: AppColors.primary,
@@ -139,10 +147,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return Container(
       width: 384,
       height: 384,
-      decoration: BoxDecoration(
-        color: color,
-        shape: BoxShape.circle,
-      ),
+      decoration: BoxDecoration(color: color, shape: BoxShape.circle),
       child: BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 100, sigmaY: 100),
         child: Container(color: Colors.transparent),
@@ -168,10 +173,7 @@ class _LoginScreenState extends State<LoginScreen> {
             ],
           ),
           clipBehavior: Clip.hardEdge,
-          child: Image.asset(
-            'assets/images/yogaa.jpeg',
-            fit: BoxFit.cover,
-          ),
+          child: Image.asset('assets/images/yogaa.jpeg', fit: BoxFit.cover),
         ),
         const SizedBox(height: 24),
         Text(
@@ -292,59 +294,66 @@ class _LoginScreenState extends State<LoginScreen> {
       child: Material(
         color: Colors.transparent,
         child: InkWell(
-          onTap: _isLoading ? null : () async {
-            if (_formKey.currentState!.validate()) {
-              setState(() {
-                _isLoading = true;
-              });
+          onTap: _isLoading
+              ? null
+              : () async {
+                  if (_formKey.currentState!.validate()) {
+                    setState(() {
+                      _isLoading = true;
+                    });
 
-              // Mock delay process
-              await Future.delayed(const Duration(seconds: 2));
-              if (!mounted) return;
+                    // Mock delay process
+                    await Future.delayed(const Duration(seconds: 2));
+                    if (!mounted) return;
 
-              setState(() {
-                _isLoading = false;
-              });
+                    setState(() {
+                      _isLoading = false;
+                    });
 
-              if (_emailController.text == 'admin@test.com' && _passwordController.text == 'Admin123') {
-                Navigator.pushReplacementNamed(context, '/dashboard', arguments: 'Admin User');
-              } else {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text(
-                      'Email atau Password salah! (Coba: admin@test.com / Admin123)',
-                      style: GoogleFonts.inter(),
-                    ),
-                    backgroundColor: Colors.red.shade600,
-                    behavior: SnackBarBehavior.floating,
-                  ),
-                );
-              }
-            }
-          },
+                    if (_emailController.text == 'admin@test.com' &&
+                        _passwordController.text == 'Admin123') {
+                      Navigator.pushReplacementNamed(
+                        context,
+                        '/dashboard',
+                        arguments: 'Admin User',
+                      );
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(
+                            'Email atau Password salah! (Coba: admin@test.com / Admin123)',
+                            style: GoogleFonts.inter(),
+                          ),
+                          backgroundColor: Colors.red.shade600,
+                          behavior: SnackBarBehavior.floating,
+                        ),
+                      );
+                    }
+                  }
+                },
           borderRadius: BorderRadius.circular(9999),
           highlightColor: Colors.black12,
           splashColor: Colors.black12,
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 18),
             child: Center(
-              child: _isLoading 
-                ? const SizedBox(
-                    width: 24,
-                    height: 24,
-                    child: CircularProgressIndicator(
-                      color: AppColors.onPrimary,
-                      strokeWidth: 2,
+              child: _isLoading
+                  ? const SizedBox(
+                      width: 24,
+                      height: 24,
+                      child: CircularProgressIndicator(
+                        color: AppColors.onPrimary,
+                        strokeWidth: 2,
+                      ),
+                    )
+                  : Text(
+                      'Login Now',
+                      style: GoogleFonts.manrope(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.onPrimary,
+                      ),
                     ),
-                  )
-                : Text(
-                    'Login Now',
-                    style: GoogleFonts.manrope(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.onPrimary,
-                    ),
-                  ),
             ),
           ),
         ),
@@ -359,10 +368,7 @@ class _LoginScreenState extends State<LoginScreen> {
       children: [
         Text(
           "Don't have an account? ",
-          style: GoogleFonts.inter(
-            fontSize: 14,
-            color: AppColors.secondary,
-          ),
+          style: GoogleFonts.inter(fontSize: 14, color: AppColors.secondary),
         ),
         TextButton(
           onPressed: () {},
@@ -393,7 +399,7 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
           ),
           if (i < 2) const SizedBox(width: 16),
-        ]
+        ],
       ],
     );
   }
@@ -472,19 +478,23 @@ class _InputDecoratedFieldState extends State<_InputDecoratedField> {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: _isFocused ? AppColors.surfaceContainerHighest : AppColors.surfaceContainerHigh,
+        color: _isFocused
+            ? AppColors.surfaceContainerHighest
+            : AppColors.surfaceContainerHigh,
         borderRadius: BorderRadius.circular(12),
-        border: _isFocused ? Border.all(color: AppColors.surfaceTint.withOpacity(0.2), width: 2) : Border.all(color: Colors.transparent, width: 2),
+        border: _isFocused
+            ? Border.all(
+                color: AppColors.surfaceTint.withOpacity(0.2),
+                width: 2,
+              )
+            : Border.all(color: Colors.transparent, width: 2),
       ),
       child: TextFormField(
         controller: widget.controller,
         validator: widget.validator,
         focusNode: _focusNode,
         obscureText: widget.isPassword && widget.obscureText,
-        style: GoogleFonts.inter(
-          color: AppColors.onSurface,
-          fontSize: 16,
-        ),
+        style: GoogleFonts.inter(color: AppColors.onSurface, fontSize: 16),
         decoration: InputDecoration(
           hintText: widget.hint,
           hintStyle: GoogleFonts.inter(
@@ -494,7 +504,9 @@ class _InputDecoratedFieldState extends State<_InputDecoratedField> {
           suffixIcon: widget.isPassword
               ? IconButton(
                   icon: Icon(
-                    widget.obscureText ? Icons.visibility : Icons.visibility_off,
+                    widget.obscureText
+                        ? Icons.visibility
+                        : Icons.visibility_off,
                     color: AppColors.outline,
                     size: 20,
                   ),
@@ -502,7 +514,10 @@ class _InputDecoratedFieldState extends State<_InputDecoratedField> {
                 )
               : null,
           border: InputBorder.none,
-          contentPadding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+          contentPadding: const EdgeInsets.symmetric(
+            vertical: 16,
+            horizontal: 16,
+          ),
         ),
       ),
     );
