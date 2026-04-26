@@ -64,4 +64,4 @@ Tambahkan screenshot di folder assets/images lalu tampilkan di sini:
 * flutter
 * google_fonts
 
-// menambahkan README sesuai tugas UTS
+// menambahkan README tugas UTS
