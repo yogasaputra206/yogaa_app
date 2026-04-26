@@ -6,7 +6,7 @@ import '../widgets/blur_sphere.dart';
 import '../widgets/glass_card.dart';
 import '../widgets/custom_text_field.dart';
 
-// menambahkan fitur forgot password
+// add fitur forgot password
 class ForgotPasswordScreen extends StatefulWidget {
   const ForgotPasswordScreen({super.key});
 
